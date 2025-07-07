@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Stranger Things - MOVIX</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: red;
+    }
+    select, video {
+      margin-top: 15px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    video {
+      width: 90%;
+      max-width: 720px;
+      height: auto;
+      background: black;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📺 Stranger Things - MOVIX</h1>
+  <p>اختر الحلقة من الموسم 1:</p>
+
+  <select id="episode" onchange="changeEpisode()">
+    <option value="0">الحلقة 1</option>
+    <option value="1">الحلقة 2</option>
+    <option value="2">الحلقة 3</option>
+    <option value="3">الحلقة 4</option>
+    <option value="4">الحلقة 5</option>
+    <option value="5">الحلقة 6</option>
+    <option value="6">الحلقة 7</option>
+    <option value="7">الحلقة 8</option>
+  </select>
+
+  <video id="player" controls>
+    <source id="videoSource" src="" type="video/mp4">
+    <track id="subSource" label="Arabic" kind="subtitles" srclang="ar" src="" default>
+    متصفحك لا يدعم تشغيل الفيديو.
+  </video>
+
+  <script>
+    const episodes = [
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E01.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/3qa1uiy76t95fflombmdv/SubtitleTools.com-Stranger.Things.S01E01.Chapter.One.The.Vanishing.Of.Will.Byers.720p.WebRip.x264-MULVAcoded-.ar.vtt?rlkey=bmlbm654bc444ik39jcy380e9&st=akcvui6y&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E02.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/6vhracypqhve8fzcohsnj/SubtitleTools.com-Stranger.Things.S01E02.BluRay.1080p.DD5.1.H265-d3g-2.vtt?rlkey=qvtavu9tali584g17pqztahuo&st=vbmkjxc4&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E03.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/n402yztm416wrw839z0pi/SubtitleTools.com-Stranger.Things.S01E03.BluRay.1080p.DD5.1.H265-d3g.vtt?rlkey=4451972w2rehxnj00srqd2itd&st=kapt39vj&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E04.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/exe2cm2hmcpkijhacapha/SubtitleTools.com-Stranger.Things.S01E04.BluRay.1080p.DD5.1.H265-d3g.vtt?rlkey=0qpnwl6b3tozv9s3lirnpt7l4&st=hu4i85x3&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E05.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/4gat0jxj6mekwgr7cuh0b/SubtitleTools.com-Stranger.Things.S01E05.BluRay.1080p.DD5.1.H265-d3g.vtt?rlkey=3bto2l8rvp2wngecntp62xqfo&st=27qf3ooo&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E06.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/n4blg4w4ptrea83lcrytr/SubtitleTools.com-Stranger.Things.S01E06.BluRay.1080p.DD5.1.H265-d3g.vtt?rlkey=a7ta8apofrp8rui1nxo7o2s5g&st=ktpoa7jz&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E07.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/eqs105ki2jqoxj0bv3rfk/SubtitleTools.com-Stranger.Things.S01E07.BluRay.1080p.DD5.1.H265-d3g.vtt?rlkey=dtlizjwsvcm4ta003sji3f9mg&st=87wqb630&dl=1"
+      },
+      {
+        video: "https://archive.org/download/stranger.-things.-s-01.720p.-blu-ray.x-264-galaxy-tv/Stranger.Things.S01E08.720p.BluRay.x264-GalaxyTV.mp4",
+        subs: "https://www.dropbox.com/scl/fi/c18602tvki2uplm9pmwk1/SubtitleTools.com-Stranger.Things.S01E08.BluRay.1080p.DD5.1.H265-d3g.vtt?rlkey=e4popka4td1wrnrmm8lha4ckc&st=5n9rjhee&dl=1"
+      }
+    ];
+
+    function changeEpisode() {
+      const index = document.getElementById("episode").value;
+      const player = document.getElementById("player");
+      const source = document.getElementById("videoSource");
+      const track = document.getElementById("subSource");
+
+      source.src = episodes[index].video;
+      track.src = episodes[index].subs;
+      player.load();
+    }
+
+    // تحميل الحلقة الأولى تلقائيًا
+    window.onload = () => {
+      document.getElementById("episode").value = "0";
+      changeEpisode();
+    };
+  </script>
+</body>
+</html>
